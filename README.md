@@ -153,14 +153,6 @@ npm run start
 
 A build otimizada estará pronta em `.next/`
 
-## 🧪 Testando Funcionalidades
-
-1. **Volume** - Mova o slider e ouça a mudança
-2. **Tempo** - Selecione velocidades diferentes
-3. **Pular** - Use os botões para navegar
-4. **Playlist** - Clique em diferentes músicas
-5. **Status** - Observe a animação quando reproduzindo
-
 ## 🐛 Troubleshooting
 
 | Problema | Solução |
