@@ -21,13 +21,13 @@ const TRACKS: Track[] = [
     id: 2,
     name: 'Subwoofer Lullaby - Minecraft',
     url: 'https://dn710204.ca.archive.org/0/items/08-minecraft_202302/03%20-%20Subwoofer%20Lullaby.mp3',
-    icon: '🌙'
+    icon: '🎮'
   },
   {
     id: 3,
     name: 'Haggstrom - Minecraft',
     url: 'https://dn710204.ca.archive.org/0/items/08-minecraft_202302/07%20-%20Haggstrom.mp3',
-    icon: '🎬'
+    icon: '🎮'
   }
 ];
 
