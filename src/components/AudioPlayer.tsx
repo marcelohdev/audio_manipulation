@@ -19,14 +19,14 @@ const TRACKS: Track[] = [
   },
   {
     id: 2,
-    name: 'Ambient Music 1',
-    url: 'https://ia801906.us.archive.org/14/items/CreativeCommons_Music_from_Incompetech/Kevin%20MacLeod%20-%20Carefree.mp3',
+    name: 'Subwoofer Lullaby - Minecraft',
+    url: 'https://dn710204.ca.archive.org/0/items/08-minecraft_202302/03%20-%20Subwoofer%20Lullaby.mp3',
     icon: '🌙'
   },
   {
     id: 3,
-    name: 'Cinematic',
-    url: 'https://ia801906.us.archive.org/14/items/CreativeCommons_Music_from_Incompetech/Kevin%20MacLeod%20-%20Impact%20Lento.mp3',
+    name: 'Haggstrom - Minecraft',
+    url: 'https://dn710204.ca.archive.org/0/items/08-minecraft_202302/07%20-%20Haggstrom.mp3',
     icon: '🎬'
   }
 ];
@@ -82,6 +82,17 @@ export default function AudioPlayer() {
     };
   }, [currentTrackIndex]);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    } else {
+      audio.pause();
+    }
+  }, [isPlaying]);
+
   const handlePlayPause = () => {
     if (!audioRef.current) return;
 
@@ -129,12 +140,10 @@ export default function AudioPlayer() {
 
   const handleNextTrack = () => {
     setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
-    setIsPlaying(true);
   };
 
   const handlePreviousTrack = () => {
     setCurrentTrackIndex((prev) => (prev - 1 + TRACKS.length) % TRACKS.length);
-    setIsPlaying(true);
   };
 
   const handleSelectTrack = (index: number) => {
