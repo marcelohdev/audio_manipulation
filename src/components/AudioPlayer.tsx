@@ -165,9 +165,9 @@ export default function AudioPlayer() {
   const currentTrack = TRACKS[currentTrackIndex];
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-8">
-      {/* Main Player */}
-      <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl p-8 text-white">
+    <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-8 px-4">
+      {/* Main Player - 2 colunas */}
+      <div className="lg:col-span-2 bg-gradient-to-b from-gray-900 to-black rounded-2xl shadow-2xl p-8 text-white">
         <audio
           ref={audioRef}
           crossOrigin="anonymous"
@@ -178,13 +178,13 @@ export default function AudioPlayer() {
         {/* Album Cover */}
         <div className="relative mb-8 rounded-xl overflow-hidden shadow-2xl">
           <div className={`w-full aspect-square bg-gradient-to-br ${isPlaying ? 'from-green-400 to-green-600 animate-pulse' : 'from-gray-700 to-gray-800'} flex items-center justify-center transition-all`}>
-            <div className="text-8xl">{currentTrack.icon}</div>
+            <div className="text-7xl">{currentTrack.icon}</div>
           </div>
         </div>
 
         {/* Track Info */}
         <div className="mb-6 text-center">
-          <h2 className="text-2xl font-bold mb-1">{currentTrack.name}</h2>
+          <h2 className="text-xl font-bold mb-2 line-clamp-2">{currentTrack.name}</h2>
           <p className={`text-sm ${isPlaying ? 'text-green-400 font-semibold' : 'text-gray-400'}`}>
             {isPlaying ? '🎵 Reproduzindo' : '⏸ Pausado'}
           </p>
@@ -207,13 +207,13 @@ export default function AudioPlayer() {
         </div>
 
         {/* Main Controls */}
-        <div className="flex items-center justify-center gap-4 mb-8">
+        <div className="flex items-center justify-center gap-3 mb-8">
           <button
             onClick={() => skipBackward(10)}
             className="text-gray-400 hover:text-green-400 transition-colors hover:scale-110"
             title="Retroceder 10s"
           >
-            <Zap size={24} />
+            <Zap size={22} />
           </button>
 
           <button
@@ -221,7 +221,7 @@ export default function AudioPlayer() {
             className="text-gray-400 hover:text-white transition-colors"
             title="Áudio anterior"
           >
-            <SkipBack size={28} />
+            <SkipBack size={24} />
           </button>
 
           <button
@@ -240,7 +240,7 @@ export default function AudioPlayer() {
             className="text-gray-400 hover:text-white transition-colors"
             title="Próximo áudio"
           >
-            <SkipForward size={28} />
+            <SkipForward size={24} />
           </button>
 
           <button
@@ -248,62 +248,65 @@ export default function AudioPlayer() {
             className="text-gray-400 hover:text-green-400 transition-colors hover:scale-110"
             title="Avançar 10s"
           >
-            <Zap size={24} />
+            <Zap size={22} />
           </button>
         </div>
 
         {/* Volume Control */}
-        <div className="flex items-center gap-3 px-2 mb-6">
-          <Volume2 size={18} className="text-gray-400" />
+        <div className="flex items-center gap-3 px-2 mb-4">
+          <Volume2 size={16} className="text-gray-400 flex-shrink-0" />
           <input
             type="range"
             min="0"
             max="100"
             value={volume}
             onChange={handleVolumeChange}
-            className="flex-1 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500"
+            className="flex-1 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-green-500"
           />
-          <span className="text-xs text-gray-400 w-8 text-right">{volume}%</span>
+          <span className="text-xs text-gray-400 w-8 text-right flex-shrink-0">{volume}%</span>
         </div>
 
         {/* Tempo Control */}
-        <div className="flex items-center gap-3 px-2">
-          <span className="text-xs text-gray-400 whitespace-nowrap">Tempo:</span>
+        <div className="flex items-center gap-2 px-2">
+          <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">Tempo:</span>
           <select
             value={playbackRate}
             onChange={handlePlaybackRateChange}
-            className="flex-1 px-3 py-2 bg-gray-800 text-white border border-gray-600 rounded-lg text-sm cursor-pointer hover:bg-gray-700 transition-colors"
+            className="flex-1 px-2 py-2 bg-gray-800 text-white border border-gray-600 rounded text-xs cursor-pointer hover:bg-gray-700 transition-colors"
           >
-            <option value="0.5">0.5x (Mais lento)</option>
+            <option value="0.5">0.5x</option>
             <option value="0.75">0.75x</option>
-            <option value="1">1x (Normal)</option>
+            <option value="1">1x</option>
             <option value="1.25">1.25x</option>
             <option value="1.5">1.5x</option>
-            <option value="2">2x (Mais rápido)</option>
+            <option value="2">2x</option>
           </select>
         </div>
       </div>
 
-      {/* Playlist */}
-      <div className="bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl p-6 text-white">
-        <h3 className="text-xl font-bold mb-4">Playlist</h3>
-        <div className="space-y-2">
+      {/* Playlist - 3 colunas */}
+      <div className="lg:col-span-3 bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl shadow-2xl p-8 text-white h-fit">
+        <h3 className="text-2xl font-bold mb-6">Playlist</h3>
+        <div className="space-y-3 max-h-[600px] overflow-y-auto pr-2">
           {TRACKS.map((track, index) => (
             <button
               key={track.id}
               onClick={() => handleSelectTrack(index)}
-              className={`w-full text-left p-4 rounded-lg transition-all ${
+              className={`w-full text-left p-4 rounded-lg transition-all transform ${
                 index === currentTrackIndex
-                  ? 'bg-green-500 text-black font-semibold shadow-lg scale-105'
-                  : 'bg-gray-700 hover:bg-gray-600 text-gray-100'
+                  ? 'bg-gradient-to-r from-green-500 to-green-400 text-black font-semibold shadow-lg scale-105'
+                  : 'bg-gray-700 hover:bg-gray-600 text-gray-100 hover:scale-102'
               }`}
             >
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{track.icon}</span>
-                <div>
-                  <p className="font-medium">{track.name}</p>
-                  <p className="text-xs opacity-75">{formatTime(duration)}</p>
+              <div className="flex items-center gap-4">
+                <span className="text-3xl">{track.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold truncate">{track.name}</p>
+                  <p className="text-xs opacity-75 mt-1">{formatTime(duration)}</p>
                 </div>
+                {index === currentTrackIndex && (
+                  <div className="text-xl animate-pulse">♫</div>
+                )}
               </div>
             </button>
           ))}

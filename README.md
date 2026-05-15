@@ -173,7 +173,3 @@ A build otimizada estará pronta em `.next/`
 ## 📄 Licença
 
 Projeto livre para uso pessoal e educacional.
-
-## 👨‍💻 Desenvolvido com ❤️
-
-Aplicação completa de manipulação de áudio desenvolvida com React e Next.js.
