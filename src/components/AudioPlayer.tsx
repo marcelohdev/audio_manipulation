@@ -52,7 +52,13 @@ export default function AudioPlayer() {
     };
 
     const handleEnded = () => {
-      handleNextTrack();
+      setCurrentTrackIndex((prev) => (prev + 1) % TRACKS.length);
+    };
+
+    const handleCanPlay = () => {
+      if (isPlaying) {
+        audio.play().catch(() => {});
+      }
     };
 
     audio.addEventListener('timeupdate', updateTime);
@@ -62,7 +68,9 @@ export default function AudioPlayer() {
     audio.addEventListener('canplaythrough', updateDuration);
     audio.addEventListener('durationchange', updateDuration);
     audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('canplay', handleCanPlay);
 
+    audio.currentTime = 0;
     audio.load();
 
     setTimeout(() => {
@@ -79,8 +87,9 @@ export default function AudioPlayer() {
       audio.removeEventListener('canplaythrough', updateDuration);
       audio.removeEventListener('durationchange', updateDuration);
       audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('canplay', handleCanPlay);
     };
-  }, [currentTrackIndex]);
+  }, [currentTrackIndex, isPlaying]);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -94,13 +103,6 @@ export default function AudioPlayer() {
   }, [isPlaying]);
 
   const handlePlayPause = () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
     setIsPlaying(!isPlaying);
   };
 
@@ -148,7 +150,9 @@ export default function AudioPlayer() {
 
   const handleSelectTrack = (index: number) => {
     setCurrentTrackIndex(index);
-    setIsPlaying(true);
+    if (!isPlaying) {
+      setIsPlaying(true);
+    }
   };
 
   const formatTime = (seconds: number) => {
