@@ -89,7 +89,7 @@ export default function AudioPlayer() {
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('canplay', handleCanPlay);
     };
-  }, [currentTrackIndex, isPlaying]);
+  }, [currentTrackIndex]);
 
   useEffect(() => {
     const audio = audioRef.current;
